@@ -1,0 +1,53 @@
+#originally written by Jeff Wouters | http://www.jeffwouters.nl | @JeffWouters
+## Now maintained by webster@carlwebster.com
+#@carlwebster on Twitter
+#http://www.CarlWebster.com
+# Version 1 released July 2014
+
+#Version 2.05 1-Aug-2018
+#	Fixed bug in WriteWordLine function reported by Steve Burkett
+
+#Version 2.04 6-Apr-2018
+#	Code clean up via Visual Code Studio
+
+#Version 2.03 13-Jan-2018
+#	Removed code that made sure all Parameters were set to default values if for some reason they did not exist or values were $Null
+#	Removed the Visible parameter
+#	Reordered the parameters in the help text and parameter list so they match and are grouped better
+#	Replaced _SetDocumentProperty function with Jim Moyle's Set-DocumentProperty function
+#	Updated Function ProcessScriptEnd for the new Cover Page properties and Parameters
+#	Updated Function ShowScriptOptions for the new Cover Page properties and Parameters
+#	Updated Function UpdateDocumentProperties for the new Cover Page properties and Parameters
+#	Updated help text
+
+#Version 2.02 13-Feb-2017
+#	Fixed French wording for Table of Contents 2 (Thanks to David Rouquier)
+#
+
+#Version 2.01 13-Feb-2017
+#	Fixed Frech wording for Table of Contents 2
+
+#Version 2.01 7-Nov-2016
+#	Added Chinese language support
+#
+
+#Version 2.0 9-May-2016
+#	Added alias for AddDateTime of ADT
+#	Added alias for CompanyName of CN
+#	Added -Dev parameter to create a text file of script errors
+#	Added more script information to the console output when script starts
+#	Added -ScriptInfo (SI) parameter to create a text file of script information
+#	Added support for emailing output report
+#	Added support for output folder
+#	Added word 2016 support
+#	Fixed numerous issues discovered with the latest update to PowerShell V5
+#	Fixed several incorrect variable names that kept PDFs from saving in Windows 10 and Office 2013
+#	General code cleanup by Michael B. Smith
+#	Output to CSV rewritten by Michael B. Smith
+#	Removed the 10 second pauses waiting for Word to save and close
+#	Removed unused parameters Text, HTML, ComputerName, Hardware
+#	Significant Active Directory changes have been implemented by Michael B. Smith
+#	Updated help text
+
+# Version 1.0 released to the community on July 14, 2014
+# http://jeffwouters.nl/index.php/2014/07/an-active-directory-health-check-powershell-script-v1-0/
