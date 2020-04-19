@@ -1,8 +1,22 @@
 #originally written by Jeff Wouters | http://www.jeffwouters.nl | @JeffWouters
-## Now maintained by webster@carlwebster.com
+#Now maintained by Carl Webster and Michael B. Smith
+#webster@carlwebster.com
 #@carlwebster on Twitter
-#http://www.CarlWebster.com
+#https://www.CarlWebster.com
+#
+#michael@smithcons.com
+#@essentialexch on Twitter
+#https://www.essential.exchange/blog/
+
 # Version 1 released July 2014
+
+#Version 2.06 17-Dec-2019
+#	Fix Swedish Table of Contents (Thanks to Johan Kallio)
+#		From 
+#			'sv-'	{ 'Automatisk innehållsförteckning2'; Break }
+#		To
+#			'sv-'	{ 'Automatisk innehållsförteckn2'; Break }
+#	Updated help text
 
 #Version 2.05 1-Aug-2018
 #	Fixed bug in WriteWordLine function reported by Steve Burkett
