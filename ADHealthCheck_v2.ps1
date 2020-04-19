@@ -148,8 +148,8 @@
 .PARAMETER AddDateTime
 	Adds a date timestamp to the end of the file name.
 	The timestamp is in the format of yyyy-MM-dd_HHmm.
-	June 1, 2018 at 6PM is 2018-06-01_1800.
-	Output filename will be ReportName_2018-06-01_1800.docx (or .pdf).
+	June 1, 2020 at 6PM is 2020-06-01_1800.
+	Output filename will be ReportName_2020-06-01_1800.docx (or .pdf).
 	This parameter is disabled by default.
 .PARAMETER Sites
 	Only perform the checks related to Sites.
@@ -242,8 +242,8 @@
 .NOTES
 	NAME        :   AD Health Check.ps1
 	AUTHOR      :   Jeff Wouters [MVP Windows PowerShell], Carl Webster and Michael B. Smith
-	VERSION     :   2.05
-	LAST EDIT   :   1-Aug-2018
+	VERSION     :   2.06
+	LAST EDIT   :   17-Dec-2019
 
 	The Word file generation part of the script is based upon the work done by:
 
@@ -397,9 +397,22 @@ Param(
 
 #region script change log	
 #originally written by Jeff Wouters | http://www.jeffwouters.nl | @JeffWouters
-# Now maintained by webster@carlwebster.com
+#Now maintained by Carl Webster and Michael B. Smith
+#webster@carlwebster.com
 #@carlwebster on Twitter
-#http://www.CarlWebster.com
+#https://www.CarlWebster.com
+#
+#michael@smithcons.com
+#@essentialexch on Twitter
+#https://www.essential.exchange/blog/
+#
+#Version 2.06 17-Dec-2019
+#	Fix Swedish Table of Contents (Thanks to Johan Kallio)
+#		From 
+#			'sv-'	{ 'Automatisk innehållsförteckning2'; Break }
+#		To
+#			'sv-'	{ 'Automatisk innehållsförteckn2'; Break }
+#	Updated help text
 #
 #Version 2.05 1-Aug-2018
 #	Fixed bug in WriteWordLine function reported by Steve Burkett
@@ -687,7 +700,8 @@ Function SetWordHashTable
 			'nb-'	{ 'Automatisk tabell 2'; Break }
 			'nl-'	{ 'Automatische inhoudsopgave 2'; Break }
 			'pt-'	{ 'Sumário Automático 2'; Break }
-			'sv-'	{ 'Automatisk innehållsförteckning2'; Break }
+			# fix in 2.06 thanks to Johan Kallio 'sv-'	{ 'Automatisk innehållsförteckning2'; Break }
+			'sv-'	{ 'Automatisk innehållsförteckn2'; Break }
 			'zh-'	{ '自动目录 2'; Break }
 		}
 	)
@@ -3704,6 +3718,13 @@ Function ProcessScriptEnd
 	$runtime = $Null
 	$Str = $Null
 	$ErrorActionPreference = $SaveEAPreference
+	
+	Write-Host "                                                                                    " -BackgroundColor Black -ForegroundColor White
+	Write-Host "               This FREE script was brought to you by Conversant Group              " -BackgroundColor Black -ForegroundColor White
+	Write-Host "We design, build, and manage infrastructure for a secure, dependable user experience" -BackgroundColor Black -ForegroundColor White
+	Write-Host "                       Visit our website conversantgroup.com                        " -BackgroundColor Black -ForegroundColor White
+	Write-Host "                                                                                    " -BackgroundColor Black -ForegroundColor White
+
 }
 #endregion
 
