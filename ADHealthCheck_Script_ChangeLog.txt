@@ -10,7 +10,8 @@
 
 # Version 1 released July 2014
 
-#Version 2.07 20-Apr-2020
+#Version 2.07 21-Apr-2020
+#	Remove the SMTP parameterset and manually verify the parameters
 #	Update Function SendEmail to handle anonymous unauthenticated email
 #		Update Help Text with examples
 

@@ -316,7 +316,7 @@
 	NAME        :   AD Health Check.ps1
 	AUTHOR      :   Jeff Wouters [MVP Windows PowerShell], Carl Webster and Michael B. Smith
 	VERSION     :   2.07
-	LAST EDIT   :   19-Apr-2020
+	LAST EDIT   :   21-Apr-2020
 
 	The Word file generation part of the script is based upon the work done by:
 
@@ -337,127 +337,108 @@
 Param(
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
 	[Alias( 'CA' )]
 	[ValidateNotNullOrEmpty()]
     [string]$CompanyAddress = '',
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
 	[Alias( 'CE' )]
 	[ValidateNotNullOrEmpty()]
     [string]$CompanyEmail = '',
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
 	[Alias( 'CF' )]
 	[ValidateNotNullOrEmpty()]
     [string]$CompanyFax = '',
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
 	[Alias( 'CN' )]
 	[ValidateNotNullOrEmpty()]
     [string]$CompanyName = '',
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
 	[Alias( 'CPh' )]
 	[ValidateNotNullOrEmpty()]
     [string]$CompanyPhone = '',
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Alias( 'CP' )]
 	[ValidateNotNullOrEmpty()]
     [string] $CoverPage = 'Sideline', 
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Alias( 'UN' )]
 	[ValidateNotNullOrEmpty()]
     [string] $UserName = $env:username,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $MSWord = $false,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $PDF = $false,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
 	[Alias( 'ADT' )]
     [Switch] $AddDateTime = $false,
 	
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $Sites,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
 	[Alias( 'OU' )]
 	[Alias( 'OrganizationalUnit' )]
     [Switch] $OrganisationalUnit,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $Users,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $Computers,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $Groups,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $All = $true,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $Log = $false,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )]
 	[Alias( 'Management' )]
     [Switch] $Mgmt = $false,
 
     [Parameter( Mandatory = $false, ParameterSetName = 'Specific' )]
     [Parameter( Mandatory = $false, ParameterSetName = 'All' )]
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
     [Switch] $CSV = $false,
 
 	[Parameter( Mandatory = $false )] 
 	[string] $Folder = '',
 	
-	[Parameter( Mandatory = $true, ParameterSetName = 'SMTP' )] 
+	[Parameter( Mandatory = $false)] 
 	[string] $SmtpServer = '',
 
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
+	[Parameter( Mandatory = $false)] 
 	[int]$SmtpPort = 25,
 
-	[Parameter( Mandatory = $false, ParameterSetName = 'SMTP' )] 
+	[Parameter( Mandatory = $false)] 
 	[Switch] $UseSSL = $false,
 
-	[Parameter( Mandatory = $true, ParameterSetName = 'SMTP' )] 
+	[Parameter( Mandatory = $false)] 
 	[string] $From = '',
 
-	[Parameter( Mandatory = $true, ParameterSetName = 'SMTP' )] 
+	[Parameter( Mandatory = $false)] 
 	[string] $To = '',
 
 	[Parameter( Mandatory = $false )] 
@@ -479,7 +460,8 @@ Param(
 #@essentialexch on Twitter
 #https://www.essential.exchange/blog/
 #
-#Version 2.07 20-Apr-2020
+#Version 2.07 21-Apr-2020
+#	Remove the SMTP parameterset and manually verify the parameters
 #	Update Function SendEmail to handle anonymous unauthenticated email
 #		Update Help Text with examples
 #		
@@ -613,6 +595,67 @@ Else
 		Write-Verbose "$(Get-Date): PDF is " $PDF
 	}
 	Write-Error "Unable to determine output parameter.  Script cannot continue"
+	Exit
+}
+
+If(![String]::IsNullOrEmpty($SmtpServer) -and [String]::IsNullOrEmpty($From) -and [String]::IsNullOrEmpty($To))
+{
+	Write-Error "
+	`n`n
+	`tYou specified an SmtpServer but did not include a From or To email address.
+	`n`n
+	`tScript cannot continue.
+	`n`n"
+	Exit
+}
+If(![String]::IsNullOrEmpty($SmtpServer) -and [String]::IsNullOrEmpty($From) -and ![String]::IsNullOrEmpty($To))
+{
+	Write-Error "
+	`n`n
+	`tYou specified an SmtpServer and a To email address but did not include a From email address.
+	`n`n
+	`tScript cannot continue.
+	`n`n"
+	Exit
+}
+If(![String]::IsNullOrEmpty($SmtpServer) -and [String]::IsNullOrEmpty($To) -and ![String]::IsNullOrEmpty($From))
+{
+	Write-Error "
+	`n`n
+	`tYou specified an SmtpServer and a From email address but did not include a To email address.
+	`n`n
+	`tScript cannot continue.
+	`n`n"
+	Exit
+}
+If(![String]::IsNullOrEmpty($From) -and ![String]::IsNullOrEmpty($To) -and [String]::IsNullOrEmpty($SmtpServer))
+{
+	Write-Error "
+	`n`n
+	`tYou specified From and To email addresses but did not include the SmtpServer.
+	`n`n
+	`tScript cannot continue.
+	`n`n"
+	Exit
+}
+If(![String]::IsNullOrEmpty($From) -and [String]::IsNullOrEmpty($SmtpServer))
+{
+	Write-Error "
+	`n`n
+	`tYou specified a From email address but did not include the SmtpServer.
+	`n`n
+	`tScript cannot continue.
+	`n`n"
+	Exit
+}
+If(![String]::IsNullOrEmpty($To) -and [String]::IsNullOrEmpty($SmtpServer))
+{
+	Write-Error "
+	`n`n
+	`tYou specified a To email address but did not include the SmtpServer.
+	`n`n
+	`tScript cannot continue.
+	`n`n"
 	Exit
 }
 
@@ -3924,7 +3967,7 @@ ForEach( $Domain in $Domains )
 	Write-Verbose "$(Get-Date): Domain $DomainFQDN"
 	WriteWordLine -Style 1 -Tabs 0 -Name "Domain $DomainFQDN"
 	FindWordDocumentEnd
-	If(($parameters.ContainsKey('Sites')) -or ($paramset -eq 'All') -or ($paramset -eq 'SMTP')) 
+	If(($parameters.ContainsKey('Sites')) -or ($paramset -eq 'All')) 
 	{
 		#Sites
 		$Script:Selection.InsertNewPage()
@@ -4002,7 +4045,7 @@ ForEach( $Domain in $Domains )
 			Add-TableContent $TableContent $parameters $CheckTitle
 		}
 	}
-	If(($parameters.ContainsKey('OrganisationalUnit')) -or ($paramset -eq 'All') -or ($paramset -eq 'SMTP')) 
+	If(($parameters.ContainsKey('OrganisationalUnit')) -or ($paramset -eq 'All')) 
 	{
 		#OrganisationalUnit
 		$Script:Selection.InsertNewPage()
@@ -4018,7 +4061,7 @@ ForEach( $Domain in $Domains )
 		FindWordDocumentEnd
 		Add-TableContent $TableContent $parameters $CheckTitle
 	}
-	If(($parameters.ContainsKey('Computers')) -or ($paramset -eq 'All') -or ($paramset -eq 'SMTP')) 
+	If(($parameters.ContainsKey('Computers')) -or ($paramset -eq 'All')) 
 	{
 		#Domain Controllers
 		$Script:Selection.InsertNewPage()
@@ -4068,7 +4111,7 @@ ForEach( $Domain in $Domains )
 		Add-TableContent $TableContent $parameters $CheckTitle
 	}
 
-	If(($parameters.ContainsKey('Users')) -or ($paramset -eq 'All') -or ($paramset -eq 'SMTP')) 
+	If(($parameters.ContainsKey('Users')) -or ($paramset -eq 'All')) 
 	{
 		#Users
 		$Script:Selection.InsertNewPage()
@@ -4126,7 +4169,7 @@ ForEach( $Domain in $Domains )
 		Add-TableContent $TableContent $parameters $CheckTitle
 	}
 
-	If(($parameters.ContainsKey('Groups')) -or ($paramset -eq 'All') -or ($paramset -eq 'SMTP')) 
+	If(($parameters.ContainsKey('Groups')) -or ($paramset -eq 'All')) 
 	{
 		#Groups
 		Write-Verbose "$(Get-Date):  Groups"
