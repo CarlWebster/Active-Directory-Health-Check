@@ -10,6 +10,10 @@
 
 # Version 1 released July 2014
 
+#Version 2.08 27-Apr-2020
+#	Add checking for a Word version of 0, which indicates the Office installation needs repairing
+#	Reformatted the terminating Write-Error messages to make them more visible and readable in the console
+
 #Version 2.07 21-Apr-2020
 #	Remove the SMTP parameterset and manually verify the parameters
 #	Update Function SendEmail to handle anonymous unauthenticated email

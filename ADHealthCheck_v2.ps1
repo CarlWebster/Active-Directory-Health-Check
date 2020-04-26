@@ -315,8 +315,8 @@
 .NOTES
 	NAME        :   AD Health Check.ps1
 	AUTHOR      :   Jeff Wouters [MVP Windows PowerShell], Carl Webster and Michael B. Smith
-	VERSION     :   2.07
-	LAST EDIT   :   21-Apr-2020
+	VERSION     :   2.08
+	LAST EDIT   :   26-Apr-2020
 
 	The Word file generation part of the script is based upon the work done by:
 
@@ -460,6 +460,10 @@ Param(
 #@essentialexch on Twitter
 #https://www.essential.exchange/blog/
 #
+#Version 2.08
+#	Add checking for a Word version of 0, which indicates the Office installation needs repairing
+#	Reformatted the terminating Write-Error messages to make them more visible and readable in the console
+
 #Version 2.07 21-Apr-2020
 #	Remove the SMTP parameterset and manually verify the parameters
 #	Update Function SendEmail to handle anonymous unauthenticated email
@@ -594,7 +598,15 @@ Else
 		Write-Verbose "$(Get-Date): MSWord is " $MSWord
 		Write-Verbose "$(Get-Date): PDF is " $PDF
 	}
-	Write-Error "Unable to determine output parameter.  Script cannot continue"
+	Write-Error "
+	`n`n
+	`t`t
+	Unable to determine output parameter.
+	`n`n
+	`t`t
+	Script cannot continue.
+	`n`n
+	"
 	Exit
 }
 
@@ -602,9 +614,11 @@ If(![String]::IsNullOrEmpty($SmtpServer) -and [String]::IsNullOrEmpty($From) -an
 {
 	Write-Error "
 	`n`n
-	`tYou specified an SmtpServer but did not include a From or To email address.
+	`t`t
+	You specified an SmtpServer but did not include a From or To email address.
 	`n`n
-	`tScript cannot continue.
+	`t`t
+	Script cannot continue.
 	`n`n"
 	Exit
 }
@@ -612,9 +626,11 @@ If(![String]::IsNullOrEmpty($SmtpServer) -and [String]::IsNullOrEmpty($From) -an
 {
 	Write-Error "
 	`n`n
-	`tYou specified an SmtpServer and a To email address but did not include a From email address.
+	`t`t
+	You specified an SmtpServer and a To email address but did not include a From email address.
 	`n`n
-	`tScript cannot continue.
+	`t`t
+	Script cannot continue.
 	`n`n"
 	Exit
 }
@@ -622,9 +638,11 @@ If(![String]::IsNullOrEmpty($SmtpServer) -and [String]::IsNullOrEmpty($To) -and 
 {
 	Write-Error "
 	`n`n
-	`tYou specified an SmtpServer and a From email address but did not include a To email address.
+	`t`t
+	You specified an SmtpServer and a From email address but did not include a To email address.
 	`n`n
-	`tScript cannot continue.
+	`t`t
+	Script cannot continue.
 	`n`n"
 	Exit
 }
@@ -632,9 +650,11 @@ If(![String]::IsNullOrEmpty($From) -and ![String]::IsNullOrEmpty($To) -and [Stri
 {
 	Write-Error "
 	`n`n
-	`tYou specified From and To email addresses but did not include the SmtpServer.
+	`t`t
+	You specified From and To email addresses but did not include the SmtpServer.
 	`n`n
-	`tScript cannot continue.
+	`t`t
+	Script cannot continue.
 	`n`n"
 	Exit
 }
@@ -642,9 +662,11 @@ If(![String]::IsNullOrEmpty($From) -and [String]::IsNullOrEmpty($SmtpServer))
 {
 	Write-Error "
 	`n`n
-	`tYou specified a From email address but did not include the SmtpServer.
+	`t`t
+	You specified a From email address but did not include the SmtpServer.
 	`n`n
-	`tScript cannot continue.
+	`t`t
+	Script cannot continue.
 	`n`n"
 	Exit
 }
@@ -652,9 +674,11 @@ If(![String]::IsNullOrEmpty($To) -and [String]::IsNullOrEmpty($SmtpServer))
 {
 	Write-Error "
 	`n`n
-	`tYou specified a To email address but did not include the SmtpServer.
+	`t`t
+	You specified a To email address but did not include the SmtpServer.
 	`n`n
-	`tScript cannot continue.
+	`t`t
+	Script cannot continue.
 	`n`n"
 	Exit
 }
@@ -674,7 +698,15 @@ If($Folder -ne "")
 		Else
 		{
 			#it exists but it is a file not a folder
-			Write-Error "Folder $Folder is a file, not a folder.  Script cannot continue"
+			Write-Error "
+			`n`n
+			`t`t
+			Folder $Folder is a file, not a folder.
+			`n`n
+			`t`t
+			Script cannot continue.
+			`n`n
+			"
 			$ErrorActionPreference = $SaveEAPreference
 			Exit
 		}
@@ -682,7 +714,15 @@ If($Folder -ne "")
 	Else
 	{
 		#does not exist
-		Write-Error "Folder $Folder does not exist.  Script cannot continue"
+		Write-Error "
+		`n`n
+		`t`t
+		Folder $Folder does not exist.
+		`n`n
+		`t`t
+		Script cannot continue.
+		`n`n
+		"
 		$ErrorActionPreference = $SaveEAPreference
 		Exit
 	}
@@ -1938,7 +1978,18 @@ Function SetupWord
 	{
 		Write-Warning "The Word object could not be created.  You may need to repair your Word installation."
 		$ErrorActionPreference = $SaveEAPreference
-		Write-Error "`n`n`t`tThe Word object could not be created.  You may need to repair your Word installation.`n`n`t`tScript cannot continue.`n`n"
+		Write-Error "
+		`n`n
+		`t`t
+		The Word object could not be created.
+		`n`n
+		`t`t
+		You may need to repair your Word installation.
+		`n`n
+		`t`t
+		Script cannot continue.
+		`n`n
+		"
 		Exit
 	}
 
@@ -1955,7 +2006,15 @@ Function SetupWord
 	If(!($Script:WordLanguageValue -gt -1))
 	{
 		$ErrorActionPreference = $SaveEAPreference
-		Write-Error "`n`n`t`tUnable to determine the Word language value.`n`n`t`tScript cannot continue.`n`n"
+		Write-Error "
+		`n`n
+		`t`t
+		Unable to determine the Word language value.
+		`n`n
+		`t`t
+		Script cannot continue.
+		`n`n
+		"
 		AbortScript
 	}
 	Write-Verbose "$(Get-Date): Word language value is $($Script:WordLanguageValue)"
@@ -1983,6 +2042,19 @@ Function SetupWord
 		Write-Error "`n`n`t`tMicrosoft Word 2007 is no longer supported.`n`n`t`tScript will end.`n`n"
 		AbortScript
 	}
+	ElseIf($Script:WordVersion -eq 0)
+	{
+		Write-Error "
+		`n`n
+		`t`t
+		The Word Version is 0. You should run a full online repair of your Office installation.
+		`n`n
+		`t`t
+		Script cannot continue.
+		`n`n
+		"
+		Exit
+	}
 	Else
 	{
 		$ErrorActionPreference = $SaveEAPreference
@@ -1993,7 +2065,7 @@ Function SetupWord
 	#only validate CompanyName if the field is blank
 	If([String]::IsNullOrEmpty($Script:CoName))
 	{
-		Write-Verbose "$(Get-Date): Company name is blank.  Retrieve company name from registry."
+		Write-Verbose "$(Get-Date): Company name is blank. Retrieve company name from registry."
 		$TmpName = ValidateCompanyName
 		
 		If([String]::IsNullOrEmpty($TmpName))
