@@ -316,7 +316,7 @@
 	NAME        :   AD Health Check.ps1
 	AUTHOR      :   Jeff Wouters [MVP Windows PowerShell], Carl Webster and Michael B. Smith
 	VERSION     :   2.08
-	LAST EDIT   :   26-Apr-2020
+	LAST EDIT   :   28-Apr-2020
 
 	The Word file generation part of the script is based upon the work done by:
 
@@ -460,10 +460,11 @@ Param(
 #@essentialexch on Twitter
 #https://www.essential.exchange/blog/
 #
-#Version 2.08
+#Version 2.08 27-Apr-2020
 #	Add checking for a Word version of 0, which indicates the Office installation needs repairing
+#	Change location of the -Dev, -Log, and -ScriptInfo output files from the script folder to the -Folder location (Thanks to Guy Leech for the "suggestion")
 #	Reformatted the terminating Write-Error messages to make them more visible and readable in the console
-
+#
 #Version 2.07 21-Apr-2020
 #	Remove the SMTP parameterset and manually verify the parameters
 #	Update Function SendEmail to handle anonymous unauthenticated email
@@ -527,32 +528,6 @@ Set-StrictMode -Version 2
 $PSDefaultParameterValues = @{"*:Verbose"=$True}
 $SaveEAPreference = $ErrorActionPreference
 $ErrorActionPreference = 'SilentlyContinue'
-##$Script:ThisScriptPath = $(Split-Path ((Get-PSCallStack)[0]).ScriptName) -- this is crap after v1
-$Script:ThisScriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
-
-If($PSBoundParameters.ContainsKey('Log')) 
-{
-    $Script:LogPath = "$Script:ThisScriptPath\ADHealthCheckTranscript.txt"
-    If((Test-Path $Script:LogPath) -eq $true) 
-	{
-        Write-Verbose "$(Get-Date): Transcript/Log $Script:LogPath already exists"
-        $Script:StartLog = $false
-    } 
-	Else 
-	{
-        try 
-		{
-            Start-Transcript -Path $Script:LogPath -Force -Verbose:$false | Out-Null
-            Write-Verbose "$(Get-Date): Transcript/log started at $Script:LogPath"
-            $Script:StartLog = $true
-        } 
-		catch 
-		{
-            Write-Verbose "$(Get-Date): Transcript/log failed at $Script:LogPath"
-            $Script:StartLog = $false
-        }
-    }
-}
 
 If($Null -eq $MSWord)
 {
@@ -728,27 +703,54 @@ If($Folder -ne "")
 	}
 }
 
+If($Folder -eq "")
+{
+	$Script:pwdpath = $pwd.Path
+}
+Else
+{
+	$Script:pwdpath = $Folder
+}
+
+If($Script:pwdpath.EndsWith("\"))
+{
+	#remove the trailing \
+	$Script:pwdpath = $Script:pwdpath.SubString(0, ($Script:pwdpath.Length - 1))
+}
+
+If($PSBoundParameters.ContainsKey('Log')) 
+{
+    $Script:LogPath = "$Script:pwdpath\ADHealthCheckTranscript.txt"
+    If((Test-Path $Script:LogPath) -eq $true) 
+	{
+        Write-Verbose "$(Get-Date): Transcript/Log $Script:LogPath already exists"
+        $Script:StartLog = $false
+    } 
+	Else 
+	{
+        try 
+		{
+            Start-Transcript -Path $Script:LogPath -Force -Verbose:$false | Out-Null
+            Write-Verbose "$(Get-Date): Transcript/log started at $Script:LogPath"
+            $Script:StartLog = $true
+        } 
+		catch 
+		{
+            Write-Verbose "$(Get-Date): Transcript/log failed at $Script:LogPath"
+            $Script:StartLog = $false
+        }
+    }
+}
+
 If($Dev)
 {
 	$Error.Clear()
-	$pwdPath = $Folder
-	If($pwdPath -eq "")
-	{
-		$pwdpath = $pwd.Path
-	}
-
-	[string] $Script:DevErrorFile = Join-Path $pwdPath "ADHealthCheckScriptErrors_$(Get-Date -f yyyy-MM-dd_HHmm).txt"
+	[string] $Script:DevErrorFile = "$Script:pwdpath\ADHealthCheckScriptErrors_$(Get-Date -f yyyy-MM-dd_HHmm).txt"
 }
 
 If($ScriptInfo)
 {
-	$pwdPath = $Folder
-	If($pwdPath -eq "")
-	{
-		$pwdpath = $pwd.Path
-	}
-
-	[string] $Script:SIFile = Join-Path $pwdPath "ADHealthCheckScriptInfo_$(Get-Date -f yyyy-MM-dd_HHmm).txt"
+	[string] $Script:SIFile = "$Script:pwdpath\ADHealthCheckScriptInfo_$(Get-Date -f yyyy-MM-dd_HHmm).txt"
 }
 
 [string]$Script:RunningOS = (Get-WmiObject -class Win32_OperatingSystem -EA 0).Caption
@@ -2531,19 +2533,13 @@ Function SetFileName1andFileName2
 		[string] $OutputFileName
 	)
 
-	$pwdPath = $Folder
-	If($pwdPath -eq "")
-	{
-		$pwdpath = $pwd.Path
-	}
-
 	#set $filename1 and $filename2 with no file extension
 	If($AddDateTime)
 	{
-		[string] $Script:FileName1 = Join-Path $pwdPath $OutputFileName
+		[string] $Script:FileName1 = Join-Path $Script:pwdpath $OutputFileName
 		If($PDF)
 		{
-			[string] $Script:FileName2 = Join-Path $pwdPath $OutputFileName
+			[string] $Script:FileName2 = Join-Path $Script:pwdpath $OutputFileName
 		}
 	}
 
@@ -2553,10 +2549,10 @@ Function SetFileName1andFileName2
 
 		If(!$AddDateTime)
 		{
-			[string] $Script:FileName1 = ( Join-Path $pwdPath $OutputFileName ) + '.docx'
+			[string] $Script:FileName1 = ( Join-Path $Script:pwdpath $OutputFileName ) + '.docx'
 			If($PDF)
 			{
-				[string] $Script:FileName2 = ( Join-Path $pwdPath $OutputFileName ) + '.pdf'
+				[string] $Script:FileName2 = ( Join-Path $Script:pwdpath $OutputFileName ) + '.pdf'
 			}
 		}
 
