@@ -316,7 +316,7 @@
 	NAME        :   AD Health Check.ps1
 	AUTHOR      :   Jeff Wouters [MVP Windows PowerShell], Carl Webster and Michael B. Smith
 	VERSION     :   2.08
-	LAST EDIT   :   28-Apr-2020
+	LAST EDIT   :   8-May-2020
 
 	The Word file generation part of the script is based upon the work done by:
 
@@ -460,10 +460,12 @@ Param(
 #@essentialexch on Twitter
 #https://www.essential.exchange/blog/
 #
-#Version 2.08 27-Apr-2020
+#Version 2.08 8-May-2020
 #	Add checking for a Word version of 0, which indicates the Office installation needs repairing
+#	Change color variables $wdColorGray15 and $wdColorGray05 from [long] to [int]
 #	Change location of the -Dev, -Log, and -ScriptInfo output files from the script folder to the -Folder location (Thanks to Guy Leech for the "suggestion")
 #	Reformatted the terminating Write-Error messages to make them more visible and readable in the console
+#	Update Function SetWordCellFormat to change parameter $BackgroundColor to [int]
 #
 #Version 2.07 21-Apr-2020
 #	Remove the SMTP parameterset and manually verify the parameters
@@ -765,8 +767,8 @@ If($MSWord -or $PDF)
 	#http://groovy.codehaus.org/modules/scriptom/1.6.0/scriptom-office-2K3-tlb/apidocs/
 	#http://msdn.microsoft.com/en-us/library/office/aa211923(v=office.11).aspx
 	[int]$wdAlignPageNumberRight = 2
-	[long]$wdColorGray15 = 14277081
-	[long]$wdColorGray05 = 15987699 
+	[int]$wdColorGray15 = 14277081
+	[int]$wdColorGray05 = 15987699 
 	[int]$wdMove = 0
 	[int]$wdSeekMainDocument = 0
 	[int]$wdSeekPrimaryFooter = 4
@@ -1758,7 +1760,7 @@ Function SetWordCellFormat
 		# Font size
 		[Parameter()] [ValidateNotNullOrEmpty()] [int] $Size = 0,
 		# Cell background color
-		[Parameter()] [AllowNull()] $BackgroundColor = $null,
+		[Parameter()] [AllowNull()] [int]$BackgroundColor = $null,
 		# Force solid background color
 		[Switch] $Solid,
 		[Switch] $Bold,
