@@ -34,7 +34,7 @@
 		Swedish
 	
 .PARAMETER CompanyAddress
-	Company Address to use for the Cover Page, if the Cover Page has the Address field.
+	Company Address to use for the Cover page if the Cover Page has the Address field.
 	
 	The following Cover Pages have an Address field:
 		Banded (Word 2013/2016)
@@ -50,7 +50,7 @@
 	This parameter is only valid with the MSWORD and PDF output parameters.
 	This parameter has an alias of CA.
 .PARAMETER CompanyEmail
-	Company Email to use for the Cover Page, if the Cover Page has the Email field.  
+	Company Email to use for the Cover page if the Cover Page has the Email field.  
 	
 	The following Cover Pages have an Email field:
 		Facet (Word 2013/2016)
@@ -58,7 +58,7 @@
 	This parameter is only valid with the MSWORD and PDF output parameters.
 	This parameter has an alias of CE.
 .PARAMETER CompanyFax
-	Company Fax to use for the Cover Page, if the Cover Page has the Fax field.  
+	Company Fax to use for the Cover page if the Cover Page has the Fax field.  
 	
 	The following Cover Pages have a Fax field:
 		Contrast (Word 2010)
@@ -213,7 +213,7 @@
 .EXAMPLE
 	PS C:\PSScript > .\ADHealthCheck_V2.ps1 -MSWord -Sites -Users -Groups
 
-	This will generate a DOCX document with the checks for Sites, Users and Groups.
+	This will generate a DOCX document with the checks for Sites, Users, and Groups.
 .EXAMPLE
 	PS C:\PSScript > .\ADHealthCheck_V2.ps1 -Folder \\FileServer\ShareName
 
@@ -243,7 +243,7 @@
 
 	The script will use the default SMTP port 25 and will not use SSL.
 
-	If the current user's credentials are not valid to send email, 
+	If the current user's credentials are not valid to send an email, 
 	the user will be prompted to enter valid credentials.
 .EXAMPLE
 	PS C:\PSScript > .\ADHealthCheck_V2.ps1 
@@ -265,7 +265,7 @@
 	https://support.google.com/a/answer/2956491?hl=en
 	https://support.google.com/a/answer/176600?hl=en
 
-	To send email using a Gmail or g-suite account, you may have to turn ON
+	To send an email using a Gmail or g-suite account, you may have to turn ON
 	the "Less secure app access" option on your account.
 	***GMAIL/G SUITE SMTP RELAY***
 
@@ -301,7 +301,7 @@
 	The script will use the email server smtp.office365.com on port 587 using SSL, 
 	sending from webster@carlwebster.com, sending to ITGroup@carlwebster.com.
 
-	If the current user's credentials are not valid to send email, 
+	If the current user's credentials are not valid to send an email, 
 	the user will be prompted to enter valid credentials.
 .EXAMPLE
 	PS C:\PSScript > .\ADHealthCheck_V2.ps1 
@@ -312,14 +312,14 @@
 	-To ITGroup@CarlWebster.com	
 
 	*** NOTE ***
-	To send email using a Gmail or g-suite account, you may have to turn ON
+	To send an email using a Gmail or g-suite account, you may have to turn ON
 	the "Less secure app access" option on your account.
 	*** NOTE ***
 	
 	The script will use the email server smtp.gmail.com on port 587 using SSL, 
 	sending from webster@gmail.com, sending to ITGroup@carlwebster.com.
 
-	If the current user's credentials are not valid to send email, 
+	If the current user's credentials are not valid to send an email, 
 	the user will be prompted to enter valid credentials.
 .INPUTS
 	None.  You cannot pipe objects to this script.
@@ -2663,14 +2663,14 @@ $Script:Title is attached.
 	{
 		If($UseSSL)
 		{
-			Write-Verbose "$(Get-Date -Format G): Trying to send email using current user's credentials with SSL"
+			Write-Verbose "$(Get-Date -Format G): Trying to send an email using current user's credentials with SSL"
 			Send-MailMessage -Attachments $emailAttachment -Body $emailBody -BodyAsHtml -From $From `
 			-Port $SmtpPort -SmtpServer $SmtpServer -Subject $emailSubject -To $To `
 			-UseSSL *>$Null
 		}
 		Else
 		{
-			Write-Verbose  "$(Get-Date -Format G): Trying to send email using current user's credentials without SSL"
+			Write-Verbose  "$(Get-Date -Format G): Trying to send an email using current user's credentials without SSL"
 			Send-MailMessage -Attachments $emailAttachment -Body $emailBody -BodyAsHtml -From $From `
 			-Port $SmtpPort -SmtpServer $SmtpServer -Subject $emailSubject -To $To *>$Null
 		}
